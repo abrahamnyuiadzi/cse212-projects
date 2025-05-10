@@ -1,3 +1,5 @@
+using System.Diagnostics.Contracts;
+
 public static class Arrays
 {
     /// <summary>
@@ -8,12 +10,23 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
+
         // TODO Problem 1 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+      if (length <=0)
+      {
+        return new double[0];// Return empty array if length is zero or negative
+      }
+      double[] result =new double[length];
+      for (int i = 0; i < length; i++)
+      {
+        result[i] = number * (i + 1);
+      }
+  
 
-        return []; // replace this return statement with your own
+        return result; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +42,27 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        if (data == null || data.Count <= 1 || amount <= 0 || amount >= data.Count)
+            return;
+
+        int count = data.Count;
+
+        // Helper: Reverse a portion of the list
+        void Reverse(int start, int end)
+        {
+            while (start < end)
+            {
+                int temp = data[start];
+                data[start] = data[end];
+                data[end] = temp;
+                start++;
+                end--;
+            }
+        }
+
+        Reverse(0, count - 1);               // Step 1: Reverse whole list
+        Reverse(0, amount - 1);              // Step 2: Reverse first 'amount' elements
+        Reverse(amount, count - 1);          // Step 3: Reverse the rest
     }
-}
+    }
+
