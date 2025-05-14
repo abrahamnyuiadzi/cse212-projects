@@ -19,14 +19,14 @@ public static class Arrays
       {
         return new double[0];// Return empty array if length is zero or negative
       }
-      double[] result =new double[length];
+      double[] result =new double[length];//initializes the result array correctly 
       for (int i = 0; i < length; i++)
       {
         result[i] = number * (i + 1);
-      }
+      }//populates the array with correct multiples
   
 
-        return result; // replace this return statement with your own
+        return result; // return the filled array
     }
 
     /// <summary>
