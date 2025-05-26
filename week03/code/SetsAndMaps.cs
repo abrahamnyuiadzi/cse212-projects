@@ -22,7 +22,25 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>(words);
+        var result = new List<string>();
+        var seen = new List<string>();
+     foreach (var word in words)
+    {
+        // Skip words like "aa"
+        if (word[0] == word[1])
+            continue;
+
+        var reversed = new string(new[] { word[1], word[0] });
+
+        if (wordSet.Contains(reversed) && !seen.Contains(reversed))
+        {
+            result.Add($"{word} & {reversed}");
+            seen.Add(word); // Mark as seen so we don't add the reverse again
+        }
+    }
+
+    return result.ToArray();
     }
 
     /// <summary>
@@ -37,16 +55,35 @@ public static class SetsAndMaps
     /// <param name="filename">The name of the file to read</param>
     /// <returns>fixed array of divisors</returns>
     public static Dictionary<string, int> SummarizeDegrees(string filename)
-    {
-        var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename))
-        {
-            var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+{
+    var degrees = new Dictionary<string, int>();
 
-        return degrees;
+    foreach (var line in File.ReadLines(filename))
+    {
+        var fields = line.Split(",");
+
+        // Make sure there are at least 4 columns
+        if (fields.Length >= 4)
+        {
+            string degree = fields[3].Trim();
+
+            if (!string.IsNullOrEmpty(degree))
+            {
+                if (degrees.ContainsKey(degree))
+                {
+                    degrees[degree]++;
+                }
+                else
+                {
+                    degrees[degree] = 1;
+                }
+            }
+        }
     }
+
+    return degrees;
+}
+
 
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
@@ -67,9 +104,47 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.Replace("", "").ToLower();
+        word2 = word2.Replace("", "").ToLower();
+
+        // Early return if lengths differ
+        if (word1.Length != word2.Length)
+            return false;
+
+        // Dictionary to count characters in word1
+        Dictionary<char, int> charCount = new Dictionary<char, int>();
+
+        foreach (char c in word1)
+        {
+            if (charCount.ContainsKey(c))
+                charCount[c]++;
+            else
+                charCount[c] = 1;
+        }
+
+         foreach (char c in word2)
+        {
+            if (charCount.ContainsKey(c))
+            {
+                charCount[c]--;
+                if (charCount[c] < 0)
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+   // Check if all character counts are zero
+    foreach (int count in charCount.Values)
+    {
+        if (count != 0)
+            return false;
     }
 
+    return true;
+}
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
     /// United States Geological Service (USGS) consisting of earthquake data.

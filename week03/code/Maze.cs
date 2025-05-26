@@ -33,6 +33,13 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+           if (_mazeMap.TryGetValue((_currX, _currY), out var directions) &&
+            directions[0] &&
+            _mazeMap.ContainsKey((_currX - 1, _currY)))
+        {
+            _currX--;
+        }
+        
     }
 
     /// <summary>
@@ -42,6 +49,12 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+          if (_mazeMap.TryGetValue((_currX, _currY), out var directions) &&
+            directions[1] &&
+            _mazeMap.ContainsKey((_currX + 1, _currY)))
+        {
+            _currX++;
+        }
     }
 
     /// <summary>
@@ -51,6 +64,12 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+          if (_mazeMap.TryGetValue((_currX, _currY), out var directions) &&
+            directions[2] &&
+            _mazeMap.ContainsKey((_currX, _currY - 1)))
+        {
+            _currY--;
+        }
     }
 
     /// <summary>
@@ -60,6 +79,12 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+          if (_mazeMap.TryGetValue((_currX, _currY), out var directions) &&
+            directions[3] &&
+            _mazeMap.ContainsKey((_currX, _currY + 1)))
+        {
+            _currY++;
+        }
     }
 
     public string GetStatus()
